@@ -1,0 +1,123 @@
+{% load static %}
+<style>
+    #logo{
+        height: 50px;
+        width: 70px;
+    }
+</style>
+<script>
+    function logout() {
+      window.location.href = "{% url 'logout' %}";
+    }
+</script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://credenz.in/">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFFmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNi4wLWMwMDIgNzkuMTY0NDg4LCAyMDIwLzA3LzEwLTIyOjA2OjUzICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjIuMCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDIzLTAyLTE1VDIzOjQzOjIzKzA1OjMwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyMy0wMi0xNVQyMzo1NDoyOSswNTozMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyMy0wMi0xNVQyMzo1NDoyOSswNTozMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpkOGQyNTBhNC1iNDgyLTNl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" alt="logo" id="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'instructions' %}">Instructions</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li> -->
+        </ul>
+
+        {% if request.user.is_authenticated %}
+        <!-- Button trigger modal -->
+        <span style="color: white;">
+          Hello {{request.user.first_name}} {{request.user.last_name}} &nbsp;
+        </span>
+        {% if request.user.is_superuser %}
+        <span style="color: yellow;">(Admin)</span>
+        {% else %}
+        <span style="color: blue;">(Player)</span>
+        {% endif %}
+        <button class="btn btn-warning mx-4" data-bs-toggle="modal" data-bs-target="#LogoutModal">Logout</button>
+        {% else %}
+        <button class="btn btn-success mx-4" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
+        {% endif %}
+        <!-- <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form> -->
+
+      </div>
+    </div>
+  </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="LogoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure to Logout ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" onclick="logout()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Username</label>
+              <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+              <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
+            </div>
+            <!-- <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div> -->
+            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

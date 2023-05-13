@@ -1,0 +1,81 @@
+{% extends 'imports.html' %}
+{% load static %}
+{% block content %}
+{% include 'navbar.html' %}
+<style>
+    th,
+    td {
+        text-align: center;
+        padding: 8px;
+    }
+
+    /* tr:nth-child(even) {
+        background-color: #;
+    } */
+    thead tr {
+        background-color: #111;
+        color: #eee;
+    }
+
+    tbody tr {
+        transition: all ease-in-out 0.25s;
+    }
+
+    tbody tr:hover {
+        transform: scale(1.02);
+    }
+</style>
+
+<div class="container m-4">
+    <small>ignore minus sign it means value will get deducted from wallet</small>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        {% for i in teams %}
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{i.id}}" aria-expanded="false" aria-controls="flush-collapse{{i.id}}">
+              {{i.Name}} - Aggregate sum : {{i.remaining_budget|add:-100}} - rating : {% for key, value in rating_dict %} 
+              {% if key == i %} {{value}} {%endif%}
+            {% endfor %}
+            </button>
+          </h2>
+          <div id="flush-collapse{{i.id}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Rating</th>
+                            <th>Domain</th>
+                            <th>Base Price</th>
+                            <th>Selling Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="company_tbody">
+                        {% for j in companies %}
+                        {% if j.team == i %}
+                        <tr class="{{j.team.Name}}">
+                            <td>
+                                {{j.name}}
+                            </td>
+                            <td>
+                                {{j.rating}}
+                            </td>
+                            <td>{{j.domain.name}}</td>
+                            <td>
+                                {{j.base_price}}
+                            </td>
+                            <td>
+                                {{j.selling_price}}
+                            </td>
+                        </tr>
+                        {%endif%}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

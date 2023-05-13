@@ -1,0 +1,98 @@
+{% extends 'imports.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<style>
+    body {
+        height: 80vh;
+    }
+    nav{
+        display: block;
+    }
+    #home_content {
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 40% 60%;
+    }
+
+    .word {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+    }
+
+    .image {
+        display: block;
+        height: 100%;
+        width: 100%;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @media (max-width: 991px) {
+        #home_content {
+        height: 0%;
+        width: 80%;
+        margin-top: 20rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+        .word{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image {
+            width: 0%;
+            height: 0%;
+            display: none;
+        }
+    }
+</style>
+<div class="container" style="min-height: 5rem;display: flex;justify-content: center;align-items: center;">
+    {% for i in messages %}
+    <div class="alert alert-{% if i.tags == 'error' %}danger{%else%}{{i.tags}}{%endif%} alert-dismissible fade show my-2" role="alert">
+        <strong>{{i.tags|title}}!</strong> {{i}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+    </div>
+<div class="container" id="home_content">
+    <div class="word">
+        <div>
+            <h1>
+                Welcome to <br>
+                <span style="color: rgb(0, 72, 255);">B-PLAN</span>
+            </h1>
+            <span>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui dignissimos quasi, nemo harum ab magnam
+                quam officia sit molestiae distinctio?
+            </span>
+        </div>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'instructions' %}">
+            <button class="btn btn-outline-primary my-3">
+                Continue
+            </button>
+        </a>
+        {% else %}
+        <button class="btn btn-outline-primary my-3" onclick="alert('Please Login First')">
+            Continue
+        </button>
+        {% endif %}
+    </div>
+    <div class="image">
+        <img src="{% static 'img/homepage.jpg' %}" width="80%" alt="" srcset="">
+    </div>
+</div>
+{% endblock %}

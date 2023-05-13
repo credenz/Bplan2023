@@ -1,0 +1,195 @@
+{% extends 'imports.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  font-family: 'raleway';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fafafa;
+}
+
+.wrapper h1 {
+  font-size: 2rem;
+  margin: 1rem 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.content-box {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 1000px;
+  margin-top: 1rem;
+}
+
+.card {
+  transition: all ease-in-out 0.5s;
+  height: 15rem;
+  width: 20rem;
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fff;
+  margin: 0.5rem 0.25rem;
+  box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.2);
+}
+
+.card i {
+  margin: 1rem;
+  color: #ff5724;
+}
+
+.card h2 {
+  margin-bottom: 1rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.card p {
+  color: #6c757d;
+  text-align: center;
+}
+
+.card:hover{
+  transform: scale(1.05);
+}
+
+/* .card:hover {}
+
+.card:hover i,
+.card:hover p {
+  color: #fff
+}
+
+.card:hover h2 {
+  font-weight: 500;
+  color: #f2f2f2;
+} */
+
+/* .card:nth-child(1):hover {
+  background: linear-gradient(45deg, rgba(255, 28, 8, 0, 7) 0%, rgba(255, 0, 82, 0, 7) 100%), url('file:///E:/Html%20Web%20Design%20Codes/The%20Coffee%20Store/ourservices.html');
+  background-size: cover;
+} */
+
+/* .card:nth-child(2):hover {
+  background: linear-gradient(45deg, rgba(255, 28, 8, 0, 7) 0%, rgba(255, 0, 82, 0, 7) 100%), url('file:///E:/Html%20Web%20Design%20Codes/The%20Coffee%20Store/ourservices.html');
+  background-size: cover;
+}
+
+.card:nth-child(3):hover {
+  background: linear-gradient(45deg, rgba(255, 28, 8, 0, 7) 0%, rgba(255, 0, 82, 0, 7) 100%), url('file:///E:/Html%20Web%20Design%20Codes/The%20Coffee%20Store/ourservices.html');
+  background-size: cover;
+}
+
+.card:nth-child(4):hover {
+  background: linear-gradient(45deg, rgba(255, 28, 8, 0, 7) 0%, rgba(255, 0, 82, 0, 7) 100%), url('file:///E:/Html%20Web%20Design%20Codes/The%20Coffee%20Store/ourservices.html');
+  background-size: cover;
+}
+
+.card:nth-child(5):hover {
+  background: linear-gradient(45deg, rgba(255, 28, 8, 0, 7) 0%, rgba(255, 0, 82, 0, 7) 100%), url('file:///E:/Html%20Web%20Design%20Codes/The%20Coffee%20Store/ourservices.html');
+  background-size: cover;
+} */
+
+/* .card:nth-child(6):hover {
+  background: linear-gradient(45deg, rgba(255, 28, 8, 0, 7) 0%, rgba(255, 0, 82, 0, 7) 100%), url('file:///E:/Html%20Web%20Design%20Codes/The%20Coffee%20Store/my%20color.png');
+  background-size: cover;
+} */
+  /***Responsive****/
+  @media (max-width: 991px) {
+    .wrapper {
+      padding:25px;
+    }
+    .wrapper h1 {
+      font-size: 2.5em;
+      font-weight: 600;
+    }
+    .content-box {
+      flex-direction: column;
+      width: 100%;
+    }
+    .card {
+      min-width: 300px;
+      margin: 10px auto;
+    }
+  }
+  #start{
+    transition: all ease-in-out 0.1s;
+  }
+  #start:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+</style>
+<body>
+  <div class="wrapper">
+    <h1> Instructions </h1>
+    <p>Here are some instructions before we start auction </p>
+    <div class="content-box">
+      <div class="card">
+        <i class="bx bx-laptop bx-md"></i>
+        <h2>Rule No 1</h2>
+        <p>
+          Need help getting started? Check out our business plan templates for guidance. They’re free real-world examples
+        </p>
+      </div>
+      <div class="card">
+        <i class="bx bx-line-chart bx-md"></i>
+        <h2>Rule No 2</h2>
+        <p>
+          Need help getting started? Check out our business plan templates for guidance. They’re free real-world examples
+        </p>
+      </div>
+      <div class="card">
+        <i class="bx bx-mail-send bx-md"></i>
+        <h2>Rule No 3</h2>
+        <p>
+          Need help getting started? Check out our business plan templates for guidance. They’re free real-world examples
+        </p>
+      </div>
+      <div class="card">
+        <i class="bx bx-bar-chart-alt bx-md"></i>
+        <h2>Rule No 4 </h2>
+        <p>
+          Need help getting started? Check out our business plan templates for guidance. They’re free real-world examples
+        </p>
+      </div>
+      <div class="card">
+        <i class="bx bx-paint bx-md"></i>
+        <h2>Rule No 5</h2>
+        <p>
+          Need help getting started? Check out our business plan templates for guidance. They’re free real-world examples
+        </p>
+      </div>
+      <div class="card">
+        <i class="bx bx-bar-chart-alt bx-md"></i>
+        <h2>Rule No 6</h2>
+        <p>
+          Need help getting started? Check out our business plan templates for guidance. They’re free real-world examples
+        </p>
+      </div>
+    </div>
+  </div>
+  {% if request.user.is_authenticated %}
+  <div style="display: flex;justify-content: center;align-items: center;margin: 1.125rem;">
+    <a href="{% url 'dashboard' 0 %}">
+    <button style="padding: 0.5rem;border-radius: 5px;font-size: medium;color: #ff5724;border: 1px solid #ff5724;background-color: transparent;" id="start">Start</button>
+    </a>
+  </div>
+  {% endif %}
+{% endblock %}

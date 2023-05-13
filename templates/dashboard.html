@@ -1,0 +1,997 @@
+{% extends 'imports.html' %}
+{% load static %}
+{% block content %}
+{% include 'navbar.html' %}
+<style>
+    #modal_container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    th,
+    td {
+        text-align: center;
+        padding: 8px;
+    }
+
+    /* tr:nth-child(even) {
+        background-color: #;
+    } */
+    thead tr {
+        background-color: #111;
+        color: #eee;
+    }
+
+    tbody tr {
+        transition: all ease-in-out 0.25s;
+    }
+
+    tbody tr:hover {
+        transform: scale(1.02);
+    }
+
+    /* ----- Variables ----- */
+    /* ----- Global ----- */
+    * {
+        box-sizing: border-box;
+    }
+
+    /* html, */
+    /* body {
+        height: 100%;
+    }
+
+    body {
+        display: grid;
+        grid-template-rows: 1fr;
+        font-family: "Raleway", sans-serif;
+        background-color: #01e37f;
+    } */
+
+    h3 {
+        font-size: 0.7em;
+        letter-spacing: 1.2px;
+        color: #a6a6a6;
+    }
+
+    img {
+        max-width: 100%;
+        filter: drop-shadow(1px 1px 3px #a6a6a6);
+    }
+
+    /* ----- Product Section ----- */
+    .product {
+        display: grid;
+        grid-template-columns: 0.9fr 1fr;
+        margin: auto;
+        padding: 2.5em 0;
+        /* min-width: 600px; */
+        width: 50rem;
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid black;
+    }
+
+    /* ----- Photo Section ----- */
+    .product__photo {
+        position: relative;
+    }
+
+    .photo-container {
+        position: absolute;
+        top: 4em;
+        left: -2.5em;
+        display: grid;
+        grid-template-rows: 1fr;
+        width: 100%;
+        height: 70%;
+        border-radius: 6px;
+        box-shadow: 4px 4px 25px -2px rgba(0, 0, 0, 0.3);
+    }
+
+    .photo-main {
+        border-radius: 6px 6px 0 0;
+        /* background-color: #9be010; */
+        /* background: radial-gradient(#e5f89e, #96e001); */
+        background-color: #fff;
+        background: radial-gradient(#fff, #eee);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .photo-main .controls {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.8em;
+        color: #fff;
+    }
+
+    .photo-main .controls i {
+        cursor: pointer;
+    }
+
+    .photo-main img {
+        position: absolute;
+        /* left: -3.5em; */
+        /* right: 0.1rem; */
+        /* top: 2em; */
+        max-width: 100%;
+        height: 50%;
+        filter: saturate(150%) contrast(120%) hue-rotate(10deg) drop-shadow(1px 20px 10px rgba(0, 0, 0, 0.3));
+    }
+
+    /* .photo-album {
+        padding: 0.7em 1em;
+        border-radius: 0 0 6px 6px;
+        background-color: #fff;
+    }
+
+    .photo-album ul {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .photo-album li {
+        float: left;
+        width: 55px;
+        height: 55px;
+        padding: 7px;
+        border: 1px solid #a6a6a6;
+        border-radius: 3px;
+    } */
+
+    /* ----- Informations Section ----- */
+    .product__info {
+        padding: 0.8em 0;
+    }
+
+    .title h1 {
+        margin-bottom: 0.1em;
+        color: #4c4c4c;
+        font-size: 1.5em;
+        font-weight: 900;
+    }
+
+    .title span {
+        font-size: 0.9em;
+        color: #a6a6a6;
+    }
+
+    .price {
+        margin: 1.5em 0;
+        color: #ff3f40;
+        font-size: 1.2em;
+    }
+
+    .price span {
+        padding-left: 0.15em;
+        font-size: 2.9em;
+    }
+
+    .variant {
+        overflow: auto;
+    }
+
+    .variant h3 {
+        margin-bottom: 1.1em;
+    }
+
+    .variant li {
+        float: left;
+        width: 35px;
+        height: 35px;
+        padding: 3px;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        cursor: pointer;
+        list-style-type: none;
+    }
+
+    .variant li:first-child,
+    .variant li:hover {
+        border: 1px solid #a6a6a6;
+    }
+
+    .variant li:not(:first-child) {
+        margin-left: 0.1em;
+    }
+
+    .rating {
+        clear: left;
+        margin: 2em 0;
+    }
+
+    .rating h3 {
+        border-bottom: 1.1em;
+    }
+
+    .description {
+        clear: left;
+        margin: 2em 0;
+    }
+
+    .description h3 {
+        margin-bottom: 1em;
+    }
+
+    .description ul {
+        font-size: 0.8em;
+        list-style: disc;
+        margin-left: 1em;
+    }
+
+    .description li {
+        text-indent: -0.6em;
+        margin-bottom: 0.5em;
+    }
+
+    .buy--btn {
+        padding: 1.5em 3.1em;
+        border: none;
+        border-radius: 7px;
+        font-size: 0.8em;
+        font-weight: 700;
+        letter-spacing: 1.3px;
+        color: #fff;
+        background-color: #ff3f40;
+        box-shadow: 2px 2px 25px -7px #4c4c4c;
+        cursor: pointer;
+    }
+
+    .buy--btn:active {
+        transform: scale(0.97);
+    }
+
+    /* Ratings widget */
+    .rate {
+        display: inline-block;
+        border: 0;
+    }
+
+    /* Hide radio */
+    .rate>input {
+        display: none;
+    }
+
+    /* Order correctly by floating highest to the right */
+    .rate>label {
+        float: right;
+    }
+
+    /* The star of the show */
+    .rate>label:before {
+        display: inline-block;
+        font-size: 2rem;
+        padding: .3rem .2rem;
+        margin: 0;
+        cursor: pointer;
+        font-family: FontAwesome;
+        content: "\f005 ";
+        /* full star */
+    }
+
+    /* Half star trick */
+    .rate .half:before {
+        content: "\f089 ";
+        /* half star no outline */
+        position: absolute;
+        padding-right: 0;
+    }
+
+    /* Click + hover color */
+    input:checked~label
+
+    /* color current and previous stars on checked */
+    /* label:hover,
+    /* label:hover~label  */
+        {
+        color: red;
+    }
+
+    /* color previous stars on hover */
+
+    /* Hover highlights */
+    /* input:checked+label:hover,
+    input:checked~label:hover,
+    /* highlight current and previous stars */
+    /* input:checked~label:hover~label, */
+    /* highlight previous selected stars for new rating */
+    /* label:hover~input:checked~label */
+
+    /* highlight previous selected stars */
+    /* {
+        color: #e0572e;
+    } */
+</style>
+<script>
+    // form = document.getElementById('teamform');
+    // form.addEventListener('submit', (e) => {
+    //     e.preventDefault()
+    //     let firstname = e.target.firstname.value
+    //     let lastname = e.target.lastname.value
+    //     let username = e.target.username.value
+    //     let password = e.target.password.value
+    //     let teamname = e.target.teamname.value
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: $("#teamform").attr("action"),
+    //         data: $("#teamform").serialize(),
+    //         success: function (response) {
+    //             console.log(response);
+    //         },
+    //         });
+    function submit_form() {
+        var form = $("#teamform");
+        var url = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function (data) {
+                if (data['status'] == 'Ok') {
+                alert("Team Added Successfully");
+                window.location.reload()
+                }
+                else{
+                    alert("Some Error : "+data['status']);
+                }
+            },
+            error: function (data) {
+                alert("some Error AT AJAX lvl : "+ data['status']);
+            }
+        });
+        form.reset()
+    }
+        // })
+    function start_bid() {
+        var url = window.location.href
+        url = url.substring(0, url.length - 2)+ '1' + url.substring(url.length - 1);
+        // alert(url);
+        window.location.href = url;
+    }
+
+    function next() {
+        var url = window.location.href;
+        for (let index = 0; index <= url.length; index++) {
+            if (index == 1) {
+                var element = parseInt(url[url.length-1-index]);
+                element += 1;
+                break;
+            }
+        }
+        url = url.substring(0, url.length - 2)+ (element).toString() + url.substring(url.length - 1);
+        // alert(url);
+        window.location.href = url;
+    }
+    function previous() {
+        var url = window.location.href;
+        for (let index = 0; index <= url.length; index++) {
+            if (index == 1) {
+                var element = parseInt(url[url.length-1-index]);
+                element -= 1;
+                break;
+            }
+        }
+        url = url.substring(0, url.length - 2)+ (element).toString() + url.substring(url.length - 1);
+        // alert(url);
+        window.location.href = url;
+    }
+
+    function change_url() {
+        var select = document.getElementById('select_company');
+        var url = window.location.href;
+        url = url.substring(0, url.length - 2) + select.value + url.substring(url.length - 2 + select.value.length)
+        // console.log(url);
+        window.location.href = url;
+    }
+
+    function bid() {
+        var bid = 0.25;
+        var price_id = document.getElementById('price');
+        var base_price = document.getElementById('base_price');
+        var price_class = document.getElementsByClassName('price')[0];
+        var base_plus_bid = document.getElementById('base_plus_bid');
+        var plus_add = document.getElementById('plus_add');
+        plus_add.style.display = 'inline';
+        price_class.style.color = 'green';
+        if (plus_add.innerHTML.length<=2) {
+            plus_add.innerHTML = null
+            var bid_val = 0;
+        }
+        else{
+            bid_val = parseFloat(plus_add.innerHTML.substring(1,plus_add.innerHTML.length-1));
+        }
+        if (base_plus_bid.value <=10) {
+            bid = 0.5;
+        }
+        else if (base_plus_bid.value <= 5) {
+            bid = 0.25;
+        }
+        else{
+            bid = 1;
+        }
+        bid_val += bid;
+        base_plus_bid.value = parseFloat(base_price.innerHTML) + bid_val;
+        plus_add.innerHTML = "("+bid_val.toString()+")"
+        document.getElementById('curr_bid_value').innerHTML =  base_plus_bid.value;
+    }
+
+    function setvalues() {
+        var selling_price = document.getElementById('selling_price');
+        var plus_add = document.getElementById('plus_add').innerHTML;
+        var bid_val = (plus_add.substring(1,plus_add.length-1));
+        selling_price.value = parseFloat(document.getElementById('base_price').innerHTML) + parseFloat(bid_val);
+    }
+
+    function change_display() {
+        var company_tbody = document.getElementById('company_tbody');
+        var children = company_tbody.children;
+        var select_team = document.getElementById('select_team');
+        document.getElementById('team_name').innerHTML = select_team.value;
+        for (let i = 0; i < children.length; i++) {
+            const element = children[i];
+            if (element.style.display != 'none') {
+                element.style.display = 'none';
+            }
+        }
+        for (let i = 0; i < children.length; i++) {
+            const element = children[i];
+            console.log(element.className + select_team.value)
+            if (element.className.toString() == select_team.value.toString()) {
+                element.style.display = '';
+            }
+        }
+    }
+</script>
+<div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+    <div class="container m-3" id="modal_container">
+        <div class="Comp_modal">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#companiesmodal">
+                Companies
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="companiesmodal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Companies Info</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table id="Comp_Table" class="display">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Rating</th>
+                                        <th>Domain</th>
+                                        <th>Base Price</th>
+                                        <th>Selling Price</th>
+                                        <th>Sold To</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in companies %}
+                                    <tr>
+                                        <td>
+                                            {{i.name}}
+                                        </td>
+                                        <td>
+                                            {{i.rating}}
+                                        </td>
+                                        <td>
+                                            {{i.domain.name}}
+                                        </td>
+                                        <td>
+                                            {{i.base_price}}
+                                        </td>
+                                        <td>
+                                            {{i.selling_price}}
+                                        </td>
+                                        <td>
+                                            {% if i.team %}
+                                            {{i.team.Name}}
+                                            {% else %}
+                                            <span style="color: red;">
+                                                Unsold
+                                            </span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if request.user.is_superuser %}
+        <div class="Add_Team_Modal">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addteammodal">
+                Add Team
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="addteammodal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Teams Info</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="display: flex;justify-content: center;align-items: center;">
+                                <strong>
+                                    Leader Info
+                                </strong>
+                            </div>
+                            <br>
+                            <form action="{% url 'create_team' %}" id="teamform" method="post">
+                                {% csrf_token %}
+                                <div style="display: grid;grid-template-columns: auto auto;" class="my-1">
+                                    <div style="display:flex;align-items: center;justify-content: center;">
+                                        First Name :
+                                    </div>
+                                    <input type="text" name="firstname" class="form-control" required
+                                        style="display: inline;">
+                                </div>
+                                <div style="display: grid;grid-template-columns: auto auto;" class="my-1">
+                                    <div style="display:flex;align-items: center;justify-content: center;">
+                                        Last Name :
+                                    </div>
+                                    <input type="text" name="lastname" class="form-control" required
+                                        style="display: inline;">
+                                </div>
+                                <div style="display: grid;grid-template-columns: auto auto;" class="my-1">
+                                    <div style="display:flex;align-items: center;justify-content: center;">
+                                        User Name :
+                                    </div>
+                                    <input type="text" name="username" class="form-control" required
+                                        style="display: inline;">
+                                </div>
+                                <div style="display: grid;grid-template-columns: auto auto;" class="my-1">
+                                    <div style="display:flex;align-items: center;justify-content: center;">
+                                        Password &nbsp; :
+                                    </div>
+                                    <input type="text" name="password" class="form-control" required
+                                        style="display: inline;">
+                                    </div>
+                                    <br>
+                                    <small>&nbsp;&nbsp;&nbsp;Password should be 8 chars min 1 Capital 1 Small 1 spcial 1 digit</small>
+                                <br><br>
+                                <div style="display: flex;justify-content: center;align-items: center;">
+                                    <strong>
+                                        Team Info
+                                    </strong>
+                                </div>
+                                <br>
+                                <div style="display: grid;grid-template-columns: auto auto;" class="my-1">
+                                    <div style="display:flex;align-items: center;justify-content: center;">
+                                        Team Name :
+                                    </div>
+                                    <input type="text" name="teamname" class="form-control" required
+                                        style="display: inline;">
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="submit_form()" id="submitButton">Save
+                                changes</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="Team_modal">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#teammodal">
+                Teams
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="teammodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Teams Info</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table id="Team_Table" class="display">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Leader</th>
+                                        <th>Budget</th>
+                                        <th>Total Companies Bought</th>
+                                        <!-- <th>Points</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for j in teams %}
+                                    {% if j.Leader == request.user %}
+                                    <tr style="background-color: #dfe76c;">
+                                        <td>
+                                            {{j.Name}}
+                                        </td>
+                                        <td>
+                                            {{j.Leader}}
+                                        </td>
+                                        <td>
+                                            {{j.remaining_budget}}
+                                        </td>
+                                        <td>
+                                            {{j.total_companies_bought}}
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td>
+                                            {{j.Name}}
+                                        </td>
+                                        <td>
+                                            {{j.Leader}}
+                                        </td>
+                                        <td>
+                                            {{j.remaining_budget}}
+                                        </td>
+                                        <td>
+                                            {{j.total_companies_bought}}
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if company != 0 and company != -1 %}
+    <div class="container m-2">
+        <div class="container"
+        style="display: flex;flex-direction: column;justify-content: center;align-items: center;min-height: 60vh;">
+        {% if request.user.is_superuser %}
+        <div style="margin: 1rem;width: 50%;display: grid;grid-template-columns: auto auto;">
+                    <label for="exampleInputPassword1" class="form-label" style="display: flex;align-items: center;justify-content: center;"> Company's Stats : </label>
+                    <select class="form-select" id="select_company"
+                        aria-label="Default select example" name="team" style="display: flex;align-items: center;justify-content: center;" onchange="change_url()">
+                        <option value="0" selected>-- Select  --</option>
+                        {% for i in companies %}
+                        {% if i == company %}
+                        <option value="{{i.id}}" selected>{{i.name}}</option>
+                        {% else %}
+                        <option value="{{i.id}}">{{i.name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+            </div>
+        {% endif %}
+            
+            <div style="display: flex;">
+                <section class="product">
+                    <div class="product__photo">
+                        <div class="photo-container">
+                            <div class="photo-main">
+                                <div class="controls">
+                                    <i class="material-icons">share</i>
+                                    <i class="material-icons">favorite_border</i>
+                                </div>
+                                <!-- <img src="https://res.cloudinary.com/john-mantas/image/upload/v1537291846/codepen/delicious-apples/green-apple-with-slice.png"
+                                alt="green apple slice"> -->
+                                <img src="{{company.img}}" height="35%" width="50%"
+                                    alt="Comapny Logo">
+                            </div>
+                            <!-- <div class="photo-album">
+                            <ul>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png"
+                                        alt="green apple"></li>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537303532/codepen/delicious-apples/half-apple.png"
+                                        alt="half apple"></li>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537303160/codepen/delicious-apples/green-apple-flipped.png"
+                                        alt="green apple"></li>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537303708/codepen/delicious-apples/apple-top.png"
+                                        alt="apple top"></li>
+                            </ul>
+                        </div> -->
+                        </div>
+                    </div>
+                    <div class="product__info">
+                        <div class="title">
+                            <h1>{{company.name}}</h1>
+                            <span>Status : {%if company.team %} Sold To {{company.team}} {% else %} Unsold {% endif %}</span>
+                        </div>
+                        <div class="price">
+                            ₹ <div id="price" style="display: inline;"> <span id="base_price">{{company.base_price}}</span><span id="plus_add" style="display: none;font-size: 2rem;">()</span> Cr{% if company.base_price > 1 %}s{%endif%}</div>
+                            <input type="hidden" id="base_plus_bid" value="{{company.base_price}}">
+                            <!-- Base Price  -->
+                        </div>
+                        <div class="variant">
+                            <h3 style="font-size: 1rem;">Domain of Company</h3>
+                            <h5>{{company.domain.name}}</h5>
+                            <!-- <ul>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png"
+                                        alt="green apple"></li>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302752/codepen/delicious-apples/yellow-apple.png"
+                                        alt="yellow apple"></li>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302427/codepen/delicious-apples/orange-apple.png"
+                                        alt="orange apple"></li>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302285/codepen/delicious-apples/red-apple.png"
+                                        alt="red apple"></li>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302427/codepen/delicious-apples/orange-apple.png"
+                                        alt="orange apple"></li>
+                                <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302285/codepen/delicious-apples/red-apple.png"
+                                        alt="red apple"></li>
+                            </ul> -->
+                        </div>
+                        <div class="rating">
+                            <h3 style="font-size: 1rem;">Rating : {{company.rating|floatformat:"0" }}</h3>
+                            <fieldset class="rate">
+                                <input type="radio" id="rating10" name="rating" value="10" disabled /><label for="rating10"
+                                    title="5 stars"></label>
+                                <input type="radio" id="rating9" name="rating" value="9" disabled /><label class="half"
+                                    for="rating9" title="4 1/2 stars"></label>
+                                <input type="radio" id="rating8" name="rating" value="8" disabled /><label for="rating8"
+                                    title="4 stars"></label>
+                                <input type="radio" id="rating7" name="rating" value="7" disabled /><label class="half"
+                                    for="rating7" title="3 1/2 stars"></label>
+                                <input type="radio" id="rating6" name="rating" value="6" disabled /><label for="rating6"
+                                    title="3 stars"></label>
+                                <input type="radio" id="rating5" name="rating" value="5" disabled /><label class="half"
+                                    for="rating5" title="2 1/2 stars"></label>
+                                <input type="radio" id="rating4" name="rating" value="4" disabled /><label for="rating4"
+                                    title="2 stars"></label>
+                                <input type="radio" id="rating3" name="rating" value="3" disabled /><label class="half"
+                                    for="rating3" title="1 1/2 stars"></label>
+                                <input type="radio" id="rating2" name="rating" value="2" disabled /><label for="rating2"
+                                    title="1 star"></label>
+                                <input type="radio" id="rating1" name="rating" value="1" disabled /><label class="half"
+                                    for="rating1" title="1/2 star"></label>
+                            </fieldset>
+                            <script>
+                                var rating = '{{company.rating|floatformat:"0" }}';
+                                var rating_radio = document.getElementById("rating"+rating);
+                                rating_radio.setAttribute('checked','checked');
+                            </script>
+                        </div>
+                        <!-- <div class="description">
+                        <h3>BENEFITS</h3>
+                        <ul>
+                            <li>Apples are nutricious</li>
+                            <li>Apples may be good for weight loss</li>
+                            <li>Apples may be good for bone health</li>
+                            <li>They're linked to a lowest risk of diabetes</li>
+                        </ul>
+                    </div> -->
+                    {% if company.team %}
+                    <div style="width: 30%;">
+                          <div class="alert alert-success d-flex justify-content-center align-items-center" role="alert" style="width: 16rem;height: 3rem;">
+                              Already Sold!
+                          </div>
+                        </div>
+                    {% else %}
+                    {% if request.user.is_superuser %}
+                        <button class="buy--btn" data-bs-toggle="modal" data-bs-target="#bidModal" onclick="setvalues()">Sell Company</button>
+                    {% endif %}
+                    {% endif %}
+                        <div class="modal fade" id="bidModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Sell Company</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{request.getfullpath}}" method="post">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Selling Price</label>
+                                                <input type="text" name="selling_price" class="form-control"
+                                                    id="selling_price" aria-describedby="emailHelp" required>
+                                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Sold To</label>
+                                                <select class="form-select" id="exampleInputPassword1"
+                                                    aria-label="Default select example" name="team">
+                                                    <option value="0" selected>-- Select --</option>
+                                                    {% for i in teams %}
+                                                    <option value="{{i.id}}">{{i.Name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <!-- <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                  </div> -->
+                                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section style="display: flex;flex-direction: column;min-height: 10vh;justify-content: space-evenly;">
+                    {% if request.user.is_superuser %}
+                    <div class="container m-3">
+                        <h5 style="display: inline;">
+                        <strong style="display: inline;">
+                            Current Bidding Value : 
+                        </strong>
+
+                        </h5>
+                        <h4 style="display: inline;">
+                        <span id="curr_bid_value" style="color: rgb(60, 60, 255);">
+
+                        </span>
+                        </h4>
+                    </div>
+                    {% else %}
+                    <div class="container m-3">
+                        <h5 style="display: inline;">
+                        <strong style="display: inline;">
+                            Your Wallet : 
+                        </strong>
+
+                        </h5>
+                        <h6>
+                        <span id="wallet" style="color: rgb(255, 96, 60);">
+                            {% for i in teams %}
+                            {% if i.Leader == request.user %}
+                            Remaining Budget : {{i.remaining_budget}} <br>
+                            Total Companies Bought : {{i.total_companies_bought}}
+                            {% endif %}
+                            {% endfor %}
+                        </span>
+                        </h6>
+                    </div>
+                    {%endif%}
+                    <div class="container m-3" style="display: flex;">
+                        <span>
+                            <strong>
+                                Choose Team : &nbsp;
+                            </strong>
+                        </span>
+                        <select class="form-select" id="select_team"
+                        aria-label="Default select example" name="team_name" style="display: flex;align-items: center;justify-content: center;" onchange="change_display();">
+                        {% if request.user.is_superuser %}
+                            <option value="0">-- Select -- </option>
+                            {% for i in teams %}
+                            <option value="{{i.Name}}">{{i.Name}}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option value="0">-- Select -- </option>
+                            {% for i in teams %}
+                            {% if i.Leader == request.user %}
+                                <option value="{{i.Name}}">{{i.Name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        </select>
+                    </div>
+                    <div class="container m-3" style="height: 20vh;overflow-y: scroll;">
+                        <strong>
+                            Companies bought by <span id="team_name"></span>
+                        </strong>
+                        <div style="margin-top: 1rem;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Rating</th>
+                                        <th>Base Price</th>
+                                        <th>Selling Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="company_tbody">
+                                    {% for i in companies %}
+                                    <tr class="{{i.team.Name}}" style="display: none;">
+                                        <td>
+                                            {{i.name}}
+                                        </td>
+                                        <td>
+                                            {{i.rating}}
+                                        </td>
+                                        <td>
+                                            {{i.base_price}}
+                                        </td>
+
+                                        <td>
+                                            {{i.selling_price}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<center>
+    <div style="display: flex;justify-content: space-evenly;align-items: center;width: 50%;">
+        <button type="button" class="btn btn-info" onclick="previous()">
+            Previous
+        </button>
+        {% if not company.team and request.user.is_superuser %}
+        <button type="button" class="btn btn-warning" onclick="bid()">
+            Bid
+        </button>
+        {% endif %}
+        <button type="button" class="btn btn-success" onclick="next()">
+            Next
+        </button>
+    </div>
+</center>
+{% else %}
+{% if company == 0 %}
+<div class="container" style="min-height: 50vh;display: flex;flex-direction: column;justify-content: center;align-items: center;">
+    <button class="buy--btn" onclick="start_bid()">Start
+        Bidding</button>
+    <small style="margin: 1rem;">
+        <strong>
+            Note :
+        </strong>
+         Add all teams before starting bidding  
+    </small>
+</div>
+{% else %}
+<center>
+    <br><br><br>
+    Game Over <br>
+    <div style="display: flex;justify-content: space-evenly;align-items: center;width: 100%;margin: 10%;">
+        <button type="button" class="btn btn-info" onclick="previous()">
+            Previous
+        </button> 
+        <div style="min-width: 20%;">
+
+        </div>
+        <a href="{% url 'result' %}">
+        <button type="button" class="btn btn-success">
+            Result
+        </button>
+        </a>
+    </div>
+</center>
+{%endif%}
+{% endif %}
+<script>
+    let comp_table = new DataTable('#Comp_Table', {
+        responsive: true
+    });
+    let team_table = new DataTable('#Team_Table', {
+        responsive: true
+    });
+</script>
+{% endblock %}
